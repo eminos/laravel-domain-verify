@@ -31,12 +31,12 @@ class DNSRecord extends BaseStrategy
 
     protected function getTxtRecordValues($url)
     {
-        $dns = new Dns($url);
-        $txtRecords = $dns->getRecords('TXT');
+        $dns = new Dns();
+        $txtRecords = $dns->getRecords($url, 'TXT');
 
-        if (preg_match_all('/"([^"]+)"/', $txtRecords, $m)) {
-            return $m[1];
-        }
+        return collect($txtRecords)->map(function ($record) {
+            return $record->txt();
+        })->toArray();
 
         return [];
     }

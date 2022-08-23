@@ -17,8 +17,6 @@ class DomainVerifierServiceProvider extends ServiceProvider
     public function boot()
     {
         if ($this->app->runningInConsole()) {
-            $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-
             $this->publishes([
                 __DIR__.'/../database/migrations' => database_path('migrations'),
             ], 'migrations');
@@ -26,9 +24,6 @@ class DomainVerifierServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__.'/../config/domain_verifier.php' => config_path('domain_verifier.php'),
             ], 'config');
-            $this->publishes([
-                __DIR__.'/../resources/assets' => public_path('vendor/domain-verify'),
-            ], 'public');
         }
 
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'laravel-domain-verify');
